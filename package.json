@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node examples/001-app.js && echo \"Passed\""
+    "test": "node examples/001-useRef.js && node examples/002-useState.js && echo \"Passed\""
   },
   "dependencies": {
     "react": "18.0.0-alpha-01be61c12",
