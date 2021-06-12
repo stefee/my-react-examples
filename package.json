@@ -1,0 +1,16 @@
+{
+  "name": "my-react-examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node examples/001-app.js && echo \"Passed\""
+  },
+  "dependencies": {
+    "react": "18.0.0-alpha-01be61c12",
+    "react-test-renderer": "18.0.0-alpha-01be61c12"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.1"
+  }
+}
