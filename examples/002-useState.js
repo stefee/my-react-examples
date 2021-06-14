@@ -3,17 +3,11 @@ import EventEmitter from "events";
 import * as React from "react";
 import * as Renderer from "react-test-renderer";
 
-var user = new EventEmitter();
-
-function renderUserInterface() {
-  var [userName, setUserName] = React.useState(null);
-
-  function hearName(name) {
-    setUserName(name);
-  }
+function MyUserInterface(props) {
+  const [userName, setUserName] = React.useState(null);
 
   function listenForUserSpeaking() {
-    user.addListener("speakName", hearName);
+    props.user.addListener("speakName", setUserName);
   }
 
   React.useEffect(listenForUserSpeaking);
@@ -25,16 +19,21 @@ function renderUserInterface() {
   }
 }
 
-var myApplication;
+const myUser = new EventEmitter();
 
-function mountMyApplication() {
-  myApplication = Renderer.create(React.createElement(renderUserInterface));
+let myRenderer;
+
+function createRenderer() {
+  const props = {
+    user: myUser,
+  };
+  myRenderer = Renderer.create(React.createElement(MyUserInterface, props));
 }
 
-Renderer.act(mountMyApplication);
+Renderer.act(createRenderer);
 
-assert.equal(myApplication.toTree().rendered, "Hello, what is your name?");
+assert.equal(myRenderer.toTree().rendered, "Hello, what is your name?");
 
-user.emit("speakName", "Michael Cera");
+myUser.emit("speakName", "Michael Cera");
 
-assert.equal(myApplication.toTree().rendered, "Nice to meet you, Michael Cera!");
+assert.equal(myRenderer.toTree().rendered, "Nice to meet you, Michael Cera!");
